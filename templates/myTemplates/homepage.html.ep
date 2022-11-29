@@ -1,0 +1,6 @@
+% layout 'master';
+% title 'Homepage';
+<h2><%= $msg %></h2>
+<p>
+  Hellooooooo
+</p>
