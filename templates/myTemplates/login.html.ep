@@ -1,11 +1,10 @@
 % layout 'master';
 % title 'Login page';
-<h2><%= $msg %></h2>
 <center>
 
 <h1>Please Login to Access the Website</h1>
 <h6>
-< font color =red>
+<font color =red>
 <% if($error_message){ %>
 <%= %error_message %>
 <% } %>
@@ -22,3 +21,4 @@
 
 </from>
 </center>
+__DATA__
