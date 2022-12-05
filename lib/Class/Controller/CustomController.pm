@@ -5,21 +5,22 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 sub welcome {
   my $self = shift;
 
-  # Render template "example/welcome.html.ep" with message
+  # Render template 'example/welcome.html.ep' with message
   #$self->render(msg => 'Welcome to the Mojolicious real-time web framework!');
-  $self->render(templates =>'myTemplates/homepage', msg => 'Welcome to My personal website!');
+  $self->render(template => 'myTemplates/homepage', msg => 'Welcome to My personal website!');
 }
 
 sub displayLogin {
 
   my $self = shift;
+  $self -> render(template => 'myTemplates/login', error_message => '');
 
-  if(&alreadyLoggedIn($self)) {
+  # if(&alreadyLoggedIn($self)) {
 
-    &welcome($self);
-  }else {
-    $self -> render(templates => "myTemplates/login", error_message =>"");
-  }
+  #   &welcome($self);
+  # }else {
+  #   $self -> render(template => 'myTemplates/login', error_message => '');
+  # }
 
 }
 
@@ -27,8 +28,8 @@ sub validUserCheck {
 
   my $self = shift;
 
-    my %validUsers = ( "may" => "welcome",
-                       "may1" => "welcome1"
+    my %validUsers = ( 'may' => 'welcome',
+                       'may1' => 'welcome1'
     );
 
   my $user = uc $self->param('username');
@@ -43,10 +44,10 @@ sub validUserCheck {
          &welcome($self);
 
     } else{
-          $self -> render(templates => "myTemplates/login", error_message => "Invalid password, please try again");
+          $self -> render(template => 'myTemplates/login', error_message => 'Invalid password, please try again');
     }
   } else {
-          $self -> render(templates => "myTemplates/login", error_message => "You are not a resistered user, please get the hell out of here");
+          $self -> render(template => 'myTemplates/login', error_message => 'You are not a resistered user, please get the hell out of here');
 
   }
 
@@ -56,8 +57,8 @@ sub alreadyLoggedIn {
 
   my $self = shift;
   return 1 if $self->session('is_auth');
-          $self->render(templates => "myTemplates/login", error_message => "You are not logged in, please log in Website");
-          return;
+  $self->render(template => 'myTemplates/login', error_message => 'You are not logged in, please log in Website');
+  return;
 }
 
 sub logout {
@@ -65,7 +66,7 @@ sub logout {
   my $self = shift;
 
   $self->session(expires => 1);
-  $self->session(templates => "myTemplates/logout");
+  $self->session(template => 'myTemplates/logout');
 }
 
 1;

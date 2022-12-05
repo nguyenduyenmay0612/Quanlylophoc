@@ -3,11 +3,12 @@
 <center>
 
 <h1>Please Login to Access the Website</h1>
+
 <h6>
 <font color =red>
-<% if($error_message){ %>
-<%= %error_message %>
-<% } %>
+<% if( $error_message) { %>
+<%= $error_message %>
+<% } %> 
 </font>
 </h6>
 
@@ -19,6 +20,6 @@
   <input type="submit" value="Submit">
   <input type="reset" value="Reset" />
 
-</from>
+</form>
 </center>
-__DATA__
+
