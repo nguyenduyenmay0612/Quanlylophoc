@@ -1,6 +1,6 @@
 % layout 'master';
 % title 'Homepage'; 
-<a href ="/logout">Log out</a>
+<a href ="/login">Log out</a>
 <h2><%= $msg %></h2>
 <p>
   Hellooooooo

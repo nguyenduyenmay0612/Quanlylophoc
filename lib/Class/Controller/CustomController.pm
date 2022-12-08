@@ -10,6 +10,7 @@ sub welcome {
   $self->render(template => 'myTemplates/homepage', msg => 'Welcome to My personal website!');
 }
 
+
 sub displayLogin {
 
   my $self = shift;
@@ -23,8 +24,15 @@ sub displayLogin {
   # }
 
 }
+sub logout {
 
-sub validUserCheck {
+  my $self = shift;
+
+  #$self->session(expires => 1);
+  $self->render(template => 'myTemplates/login', error_message =>'');
+}
+
+=sub validUserCheck {
 
   my $self = shift;
 
@@ -59,14 +67,9 @@ sub alreadyLoggedIn {
   return 1 if $self->session('is_auth');
   $self->render(template => 'myTemplates/login', error_message => 'You are not logged in, please log in Website');
   return;
-}
+} 
+=cut
 
-sub logout {
 
-  my $self = shift;
-
-  $self->session(expires => 1);
-  $self->session(template => 'myTemplates/logout');
-}
 
 1;

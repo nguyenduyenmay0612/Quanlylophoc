@@ -16,8 +16,8 @@ sub startup {
 
   # Normal route to controller
   $r->get('/')->to('CustomController#displayLogin'); 
-  $r->post('/login')->to('CustomController#validUserCheck');
-  $r->any('/logout')->to('CustomController#logout');
+  $r->post('/welcome')->to('CustomController#welcome');
+  $r->get('/login')->to('CustomController#logout');
 
   my $authorized = $r->under('/')->to('CustomController#alreadyLoggedIn');
 }
