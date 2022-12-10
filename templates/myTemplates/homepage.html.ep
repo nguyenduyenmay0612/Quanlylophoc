@@ -1,6 +1,9 @@
 % layout 'master';
-% title 'Homepage';
+% title 'Homepage'; 
+<a href ="/login">Log out</a>
 <h2><%= $msg %></h2>
 <p>
   Hellooooooo
 </p>
+
+__DATA__

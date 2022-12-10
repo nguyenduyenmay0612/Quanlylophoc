@@ -1,0 +1,25 @@
+% layout 'master';
+% title 'Login page';
+<center>
+
+<h1>Please Login to Access the Website</h1>
+
+<h6>
+<font color =red>
+<% if( $error_message) { %>
+<%= $error_message %>
+<% } %> 
+</font>
+</h6>
+
+<form action="/welcome" method="post">
+
+  <b>Username</b> <input type="text" name="usename" required> </br>
+  <b>Password</b> <input type="password" name="pass" required> </br>
+
+  <input type="submit" value="Submit">
+  <input type="reset" value="Reset" />
+
+</form>
+</center>
+

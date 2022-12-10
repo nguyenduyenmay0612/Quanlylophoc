@@ -2,7 +2,8 @@ package Class;
 use Mojo::Base 'Mojolicious', -signatures;
 
 # This method will run once at server start
-sub startup ($self) {
+sub startup {
+  my $self = shift;
 
   # Load configuration from config file
   my $config = $self->plugin('NotYAMLConfig');
@@ -14,7 +15,12 @@ sub startup ($self) {
   my $r = $self->routes;
 
   # Normal route to controller
-  $r->get('/')->to('CustomController#welcome');
+  $r->get('/')->to('CustomController#displayLogin'); 
+  $r->post('/welcome')->to('CustomController#welcome');
+  $r->get('/login')->to('CustomController#logout');
+
+  my $authorized = $r->under('/')->to('CustomController#alreadyLoggedIn');
 }
 
 1;
+__DATA__

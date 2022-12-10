@@ -1,0 +1,8 @@
+% layout 'master';
+% title 'Logout Page';
+<center>
+
+<h6> You have successfully logged out of the website. Thank you. Please <a href="/"> click here </a> </h6>
+
+</center>
+__DATA__
