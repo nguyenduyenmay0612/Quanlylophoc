@@ -1,27 +1,64 @@
 package Class::Controller::CustomController;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
+use mojo::mysql;
+my $mysql = Mojo::mysql->strict_mode('mysql://root@localhost/class');
+
+use Mojo::mysql::Database;
+use Mojo::mysql::Results;
+use Mojolicious::Plugins;
+#use Mojolicious::Plugin::Authentication
+
+my $db = Mojo::mysql::Database->new(mysql => $mysql);
+use base 'DBIx::Class::ResultSet';
+#my $results = Mojo::mysql::Results->new(db => $db, sth => $sth);
+
+
 # This action will render a template
-sub welcome ($self) {
+sub welcome  {
+  my $self = shift;
+  my $username = $self->param('username');
+  my $pass = $self->param('pass'); 
+  
+  #if ( ! $username || ! $pass) {
+    #$self ->flash(error => 'Username and Password la bat buoc');
+    #$self -> render(template => 'myTemplates/login');
+  #}
+# my $dbh = $self->app->{_dbh};
+   # my $results= $dbh->query('users')->where (
+    #    username => $username,
+    #    pass => $pass
+        #);
+    #$self ->flash(message => 'thanh cong');
+   # $self->render(template =>'myTemplates/homepage',msg => 'Welcome to My personal website!'); 
+  my $auth_key =plugin->authenticate($username, $pass );
+
+    if ( $auth_key )  {
+        $self->flash( msg => 'Login Success.');
+        $self->render(template =>'myTemplates/homepage',msg => 'Welcome to My personal website!'); 
+    }
+    else {
+        $self->flash( error => 'Invalid username or password.');
+        $self->render(template =>'myTemplates/login',msg => 'Welcome to My personal website!'); 
+    }
 
   # Render template "example/welcome.html.ep" with message
   #$self->render(msg => 'Welcome to the Mojolicious real-time web framework!');
-  $self->render(templates =>'myTemplates/homepage', msg => 'Welcome to My personal website!');
+  #$self->render(template =>'myTemplates/homepage', msg => 'Welcome to My personal website!');
 }
 
-sub displayLogin {
+sub disLogin {
+
 
   my $self = shift;
 
-  if(&alreadyLoggedIn($self)) {
-    &welcome($self)
-  }else {
-    $self -> render(templates => "myTemplates/login", error_message =>"");
-  }
-
+  $self -> render(template => 'myTemplates/login', error => $self->flash('error'), message => $self->flash('message'));
+  
+ 
 }
 
-sub validUserCheck {
+
+=sub validUserCheck {
 
   my $self = shift;
 
@@ -41,10 +78,10 @@ sub validUserCheck {
          &welcome($self);
 
     } else{
-          $self -> render(templates => "myTemplates/login", error_message => "Invalid password, please try again");
+          $self -> render(template => 'myTemplates/login', error_message => "Invalid password, please try again");
     }
   }else {
-          $self -> render(templates => "myTemplates/login", error_message => "You are not a resistered user, please get the hell out of here");
+          $self -> render(template => 'myTemplates/login', error_message => "You are not a resistered user, please get the hell out of here");
 
   }
 
@@ -54,15 +91,16 @@ sub alreadyLoggedIn{
 
   my $self = shift;
   return 1 if $self->session('is_auth');
-          $self -> render(templates => "myTemplates/login", error_message => "You are not logged in, please log in Website");
+          $self -> render(template => 'myTemplates/login', error_message => "You are not logged in, please log in Website");
           return;
 }
+=cut
 
 sub logout {
 
-  my $self = shift;
-  $self->session(expires =>1);
-  $self->session(templates => "myTemplates/logout");
+ my $self = shift;
+
+  $self -> render(template => 'myTemplates/login', error_message =>"");
 }
 
 1;

@@ -1,7 +1,11 @@
 % layout 'master';
 % title 'Homepage'; 
-<a href ="/logout">Log out </a>
-<h2><%= $msg %></h2>
+<a href ="/logout">Log out</a>
+% if ($msg) {
+            <div class="error" style="color: green">
+                <small> <%= $msg %> </small>
+            </div>
+        %}
 <p>
   Hellooooooo
 </p>
